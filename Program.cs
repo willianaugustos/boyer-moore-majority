@@ -5,8 +5,8 @@ public static class Program
     public static void Main(String[] args)
     {
         int[] sequence = { 20, 18, 60, 10, 10, 10, 10, 20, 20, 20, 20, 20, 20, 48 };
-        int element = BoyerMoore.FindMajorityElement(sequence);
-        Console.WriteLine($"The majority element is: {element}");
+        int element = BoyerMoore.FindMostFrequentElement(sequence);
+        Console.WriteLine($"The most frequent element is: {element}");
 
         decimal percent = BoyerMoore.CalculateRecurrencyPercentage(element, sequence);
         Console.WriteLine($"The recurrency is {percent * 100}%");
@@ -15,7 +15,7 @@ public static class Program
 
 public static class BoyerMoore
 {
-    public static int FindMajorityElement(int[] elementArray)
+    public static int FindMostFrequentElement(int[] elementArray)
     {
         int count = 0;
         int elementCandidate = -1;
