@@ -4,18 +4,19 @@ public static class Program
 {
     public static void Main(String[] args)
     {
-        int[] sequence = { 20, 18, 60, 10, 10, 10, 10, 20, 20, 20, 20, 20, 20, 48 };
-        int element = BoyerMoore.FindMostFrequentElement(sequence);
-        Console.WriteLine($"The most frequent element is: {element}");
-
-        decimal percent = BoyerMoore.CalculateRecurrencyPercentage(element, sequence);
-        Console.WriteLine($"The recurrency is {percent * 100}%");
+        int[] sequence = { 1, 2, 3, 4, 2, 2, 2, 7, 8, 2, 2, 2, 12, 2 };
+        var (element, isMajority) = BoyerMooreMajority.FindMostFrequentElement(sequence);
+        
+        if (isMajority)
+         Console.WriteLine($"The most frequent element is: {element} (more than 50%)");
+        else
+         Console.WriteLine("No majority element found.");
     }
 }
 
-public static class BoyerMoore
+public static class BoyerMooreMajority
 {
-    public static int FindMostFrequentElement(int[] elementArray)
+    public static (int, bool) FindMostFrequentElement(int[] elementArray)
     {
         int count = 0;
         int elementCandidate = -1;
@@ -39,17 +40,15 @@ public static class BoyerMoore
                 }
             }
         }
-        return elementCandidate;
+        return (elementCandidate, 
+            CalculateRecurrencyPercentage(elementCandidate, elementArray) > 0.5M);
     }
 
-    public static decimal CalculateRecurrencyPercentage(int number, int[] sequence)
+    private static decimal CalculateRecurrencyPercentage(int number, int[] elementArray)
     {
-        int count = 0;
-        foreach (int element in sequence)
-        {
-            if (element == number)
-                count++;
-        }
-        return Math.Round((decimal)count / sequence.Length,2);
+        decimal recurrency = (decimal)elementArray.Where(e=>e == number).Count() / 
+            elementArray.Count();
+
+        return recurrency;
     }
 }
